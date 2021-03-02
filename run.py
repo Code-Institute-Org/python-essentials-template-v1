@@ -1,7 +1,5 @@
 
-import os
-
-print("Creds: %s" % (os.getenv('CREDS'),))
+print("Creds: %s" % (open('creds.json').read(),))
 print('hello')
 
 a = input('Input something')
