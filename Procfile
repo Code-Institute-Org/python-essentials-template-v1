@@ -1,1 +1,1 @@
-web: node ci-xterm/index.js
+web: node index.js
