@@ -1,4 +1,5 @@
 {
+  "postinstall": "cd ci-xterm && npm install",
   "dependencies": {
     "node": "^15.8.0",
     "node-static": "^0.7.11",
