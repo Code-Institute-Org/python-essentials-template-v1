@@ -1,6 +1,6 @@
 
 print('hello')
 
-a = input('Input something\n')
+a = input('Input something')
 
 print (a)
