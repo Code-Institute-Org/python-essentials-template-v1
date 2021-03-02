@@ -13,7 +13,7 @@ const io = require('socket.io')(server);
 io.on('connection', (socket) => {
     console.log("Socket Connected"); 
 
-    let pyshell = new PythonShell('../run.py');
+    let pyshell = new PythonShell('run.py');
 
 
     socket.on('disconnect', () =>  {
