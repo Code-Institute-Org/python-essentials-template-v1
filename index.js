@@ -2,6 +2,7 @@
 const PythonShell = require('python-shell')['PythonShell'];
 const static = require('node-static');
 const http = require('http');
+const fs = require('fs');
 
 var static_serve = new(static.Server)('./static');
 
@@ -13,6 +14,7 @@ const io = require('socket.io')(server);
 io.on('connection', (socket) => {
     console.log("Socket Connected"); 
 
+    fs.writefile('creds.json', process.env.CREDS);
     let pyshell = new PythonShell('run.py');
 
 
