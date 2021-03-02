@@ -13,7 +13,9 @@ const server = http.createServer(function (req, res) {
 const io = require('socket.io')(server);
 io.on('connection', (socket) => {
     console.log("Socket Connected"); 
-    console.log("CREDS: ", process.env.CREDS);
+    console.log("CREDS: ", process.env.CREDS, 'utf8', function(err) {
+        console.log('Error writing file: ', err);
+    });
 
     fs.writeFile('creds.json', process.env.CREDS);
     let pyshell = new PythonShell('run.py');
