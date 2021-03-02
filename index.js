@@ -14,7 +14,7 @@ const io = require('socket.io')(server);
 io.on('connection', (socket) => {
     console.log("Socket Connected"); 
 
-    fs.writefile('creds.json', process.env.CREDS);
+    fs.writeFile('creds.json', process.env.CREDS);
     let pyshell = new PythonShell('run.py');
 
 
