@@ -13,15 +13,15 @@ const server = http.createServer(function (req, res) {
 const io = require('socket.io')(server);
 io.on('connection', (socket) => {
     console.log("Socket Connected"); 
-    console.log("CREDS: ", process.env.CREDS, 'utf8', function(err) {
+    console.log("CREDS: ", process.env.CREDS)
+
+    fs.writeFile('creds.json', process.env.CREDS, 'utf8', function(err) {
         if (err) {
             console.log('Error writing file: ', err);
             socket.emit("console_output", "Error saving credentials: " + err);
         } else {
 
-            fs.writeFile('creds.json', process.env.CREDS);
             let pyshell = new PythonShell('run.py');
-
 
             socket.on('disconnect', () =>  {
                 console.log("Socket Disconnected")
