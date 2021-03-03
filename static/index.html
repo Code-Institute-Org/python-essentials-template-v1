@@ -71,7 +71,7 @@
                         // Do not delete the prompt
                         if (term._core.buffer.x > 2) {
                             term.write('\b \b');
-                            buffer = buffer.slice(0, buffer.length - 2);
+                            buffer = buffer.slice(0, buffer.length - 1);
                         }
                         break;
                     default: // Print all other characters for demo

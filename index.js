@@ -24,13 +24,21 @@ io.on('connection', (socket) => {
                 let pyshell = new PythonShell('run.py');
 
                 socket.on('disconnect', () =>  {
-                    console.log("Socket Disconnected")
-                    pyshell.end();
+                    console.log("Socket Disconnected");
+                    try {
+                        pyshell.kill();
+                    } catch (e) {
+                        console.log('Cannot send any more to pyshell', e);
+                    }
                 });
 
                 socket.on('command_entered', (command) =>  {
-                    console.log("Socket Command: ", command)
-                    pyshell.send(command);
+                    console.log("Socket Command: ", command);
+                    try {
+                        pyshell.send(command);
+                    } catch (e) {
+                        console.log('Cannot send any more to pyshell', e);
+                    }
                 });
 
 
@@ -39,7 +47,11 @@ io.on('connection', (socket) => {
                 pyshell.on('message',  (message) => {
                     // received a message sent from the Python script (a simple "print" statement)
                     console.log('process Out: ', message);
-                    socket.emit("console_output", message);
+                    try {
+                        socket.emit("console_output", message);
+                    } catch (e) {
+                        console.log('Cannot write to socket', e);
+                    }
                 });
 
                 pyshell.on('close', () => {
@@ -48,8 +60,13 @@ io.on('connection', (socket) => {
 
                 pyshell.on('error', (message) => {
                     console.log('Process error:', message);
-                    socket.emit("console_output", message.traceback.replace('\n', '\r\n'));
+                    try {
+                        socket.emit("console_output", message.traceback.replace('\n', '\r\n'));
+                    } catch (e) {
+                        console.log('Cannot write to socket', e);
+                    }
                 });
+
             } catch (e) {
                 console.error("Exception running", e);
             }
