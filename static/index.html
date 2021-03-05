@@ -28,7 +28,7 @@
             socket.on('console_output', function(msg, cb) {
                 console.log("output:", msg)
                 term.writeln(msg);
-                term_prompt(term);
+                term_short_prompt(term);
                 if (cb)
                     cb();
             });
@@ -38,6 +38,11 @@
         function term_prompt(term) {
             buffer = '';
             term.write('\r\n$ ');
+        }
+
+        function term_short_prompt(term) {
+            buffer = '';
+            term.write('\r$ ');
         }
 
         function init_terminal() {
@@ -51,10 +56,6 @@
 
                 term._initialized = true;
 
-                term.prompt = () => {
-                    term.write('\r\n$ ');
-                };
-
                 term.writeln('Running your file: run.py');
                 term.writeln('');
                 term_prompt(term);
@@ -64,7 +65,6 @@
                     case '\r': // Enter
                         console.log("command entered: ", buffer)
                         socket.emit('command_entered', buffer);
-                    case '\u0003': // Ctrl+C
                         term_prompt(term);
                     break;
                     case '\u007F': // Backspace (DEL)
