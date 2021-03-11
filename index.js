@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
         }
     }
 
-    if (process.env.CRED != null) {
+    if (process.env.CREDS != null) {
         fs.writeFile('creds.json', process.env.CREDS, 'utf8', function(err) {
             if (err) {
                 console.log('Error writing file: ', err);
